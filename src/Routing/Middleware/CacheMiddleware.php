@@ -184,12 +184,6 @@ class CacheMiddleware {
 	 * @return \Cake\Http\Response
 	 */
 	protected function _deliverCacheFile(Request $request, Response $response, $file, $ext) {
-		$compressionEnabled = $response->compress();
-
-		if (!$compressionEnabled) {
-			$response = $response->withHeader('Content-Length', (string)filesize($file));
-		}
-
 		$cacheContent = $this->_cacheContent;
 		$cacheInfo = $this->_cacheInfo;
 

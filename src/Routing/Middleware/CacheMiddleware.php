@@ -185,15 +185,6 @@ class CacheMiddleware {
 	 */
 	protected function _deliverCacheFile(Request $request, Response $response, $file, $ext) {
 		$compressionEnabled = $response->compress();
-		if ($response->getType() === $ext) {
-			$contentType = 'application/octet-stream';
-			$agent = $request->getEnv('HTTP_USER_AGENT');
-			if ($agent && (preg_match('%Opera(/| )([0-9].[0-9]{1,2})%', $agent) || preg_match('/MSIE ([0-9].[0-9]{1,2})/', $agent))) {
-				$contentType = 'application/octetstream';
-			}
-
-			$response = $response->withType($contentType);
-		}
 
 		if (!$compressionEnabled) {
 			$response = $response->withHeader('Content-Length', (string)filesize($file));
